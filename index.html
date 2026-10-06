@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Transformer - Pranav Kaushik</title>
+    
+    <!-- Meta Data for Google Search Recognition & SEO -->
+    <meta name="description" content="Official Winter Transformer 150 Days Fitness Challenge created by Pranav Kaushik. Track habits, workouts, XP points, and countdown to Feb 28, 2027.">
+    <meta name="keywords" content="Winter Transformer, Winter Arc, Pranav Kaushik, Fitness Challenge, Calisthenics Routine">
+    <meta name="author" content="Pranav Kaushik">
+    
+    <!-- Open Graph Data -->
+    <meta property="og:title" content="Winter Transformer - Pranav Kaushik">
+    <meta property="og:description" content="150 Days Winter Transformation Challenge Target Feb 28, 2027.">
+    <meta property="og:type" content="website">
+
+    <!-- Structured Schema for Google Search Engine -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Winter Transformer",
+      "alternateName": ["Winter Arc", "Winter Transformer Challenge"],
+      "author": {
+        "@type": "Person",
+        "name": "Pranav Kaushik"
+      },
+      "description": "A 150-day structured fitness transformation system created by Pranav Kaushik."
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #090d16;
+            --card-bg: #111827;
+            --accent: #00f2fe;
+            --accent-secondary: #4facfe;
+            --accent-glow: rgba(0, 242, 254, 0.25);
+            --text: #ffffff;
+            --text-sub: #9ca3af;
+            --border: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 15px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 25px 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 24px rgba(0, 242, 254, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        .creator-tag {
+            display: inline-block;
+            margin-top: 12px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--accent-secondary);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+            .full-width-card {
+                grid-column: span 2;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Countdown Timer */
+        .timer-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .timer-unit {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 14px 5px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .timer-num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Track Controls */
+        .track-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .track-btn {
+            flex: 1;
+            padding: 12px 5px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .track-btn.active {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent));
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* Routines List */
+        .routine-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .day-box {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .day-header {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-title {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .day-desc {
+            font-size: 0.88rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        .xp-tag {
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 0.8rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            margin-left: 4px;
+            display: inline-block;
+        }
+
+        .workout-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            border: 1px solid var(--accent);
+            padding: 5px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        .workout-link:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Habits Section */
+        .habit-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--border);
+            color: #fff;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-circle:hover {
+            background: var(--accent-secondary);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>WINTER TRANSFORMER</h1>
+        <p>150 Days Challenge | Target: February 28, 2027</p>
+        <div class="creator-tag">Created by Pranav Kaushik</div>
+    </header>
+
+    <div class="grid-layout">
+        <!-- Countdown Timer -->
+        <div class="card full-width-card">
+            <div class="card-title">
+                <span>⏱️ Target Countdown</span>
+                <span style="font-size: 0.8rem; color: var(--text-sub);">Feb 28, 2027</span>
+            </div>
+            <div class="timer-display">
+                <div class="timer-unit">
+                    <div class="timer-num" id="days">00</div>
+                    <div class="timer-label">Days</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-num" id="hours">00</div>
+                    <div class="timer-label">Hours</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-num" id="minutes">00</div>
+                    <div class="timer-label">Mins</div>
+                </div>
+                <div class="timer-unit">
+                    <div class="timer-num" id="seconds">00</div>
+                    <div class="timer-label">Secs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mandatory Habits & Tracker -->
+        <div class="card full-width-card">
+            <div class="card-title">📌 Daily Mandatory Habits</div>
+            
+            <div class="habit-item">
+                <span>🌅 Wake Up at 4:00 AM</span>
+                <input type="checkbox" id="wake4am" style="width:22px; height:22px; accent-color: var(--accent); cursor:pointer;">
+            </div>
+
+            <div class="habit-item">
+                <div>
+                    <div>💧 Water Requirement</div>
+                    <small style="color: var(--text-sub);">Target: 4.0 Liters</small>
+                </div>
+                <div class="counter-controls">
+                    <button class="btn-circle" id="wMinus">-</button>
+                    <span id="waterVal" style="font-weight: bold; width: 45px; text-align: center; color: var(--accent);">0.0L</span>
+                    <button class="btn-circle" id="wPlus">+</button>
+                </div>
+            </div>
+
+            <div class="habit-item">
+                <div>
+                    <div>🥩 Protein Intake</div>
+                    <small style="color: var(--text-sub);">Target: 100 Grams</small>
+                </div>
+                <div class="counter-controls">
+                    <button class="btn-circle" id="pMinus">-</button>
+                    <span id="proteinVal" style="font-weight: bold; width: 45px; text-align: center; color: var(--accent);">0g</span>
+                    <button class="btn-circle" id="pPlus">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day-Wise Routines -->
+        <div class="card full-width-card">
+            <div class="card-title">🏋️ Day-Wise Exercise Routines (Per-Exercise XP)</div>
+            
+            <div class="track-selector">
+                <button class="track-btn active" id="btnFatLoss">Fat Loss (+20 XP/ex)</button>
+                <button class="track-btn" id="btnMuscular">Muscular Track (+50 XP/ex)</button>
+                <button class="track-btn" id="btnFatBalance">Fat Balance (+30 XP/ex)</button>
+            </div>
+
+            <div class="routine-list" id="routineContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        // 1. COUNTDOWN TIMER LOGIC
+        const targetDate = new Date("February 28, 2027 00:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+            }
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // 2. DAILY HABIT COUNTERS LOGIC
+        let water = 0.0;
+        let protein = 0;
+
+        document.getElementById('wMinus').onclick = function () {
+            water = Math.max(0, water - 0.5);
+            document.getElementById('waterVal').innerText = water.toFixed(1) + 'L';
+        };
+
+        document.getElementById('wPlus').onclick = function () {
+            water += 0.5;
+            document.getElementById('waterVal').innerText = water.toFixed(1) + 'L';
+        };
+
+        document.getElementById('pMinus').onclick = function () {
+            protein = Math.max(0, protein - 10);
+            document.getElementById('proteinVal').innerText = protein + 'g';
+        };
+
+        document.getElementById('pPlus').onclick = function () {
+            protein += 10;
+            document.getElementById('proteinVal').innerText = protein + 'g';
+        };
+
+        // 3. ROUTINES DATA
+        const agilityLink = "https://youtube.com/shorts/OLsyuQk3P-k?si=PzgeyiOZCiIKc1MO";
+
+        const routinesData = {
+            fatloss: [
+                { 
+                    day: "Monday", 
+                    title: "Full Body Strength (4 Sets | Rest 60s)", 
+                    desc: "Bodyweight Squats: 15–20 reps <span class='xp-tag'>+20 XP</span><br>Push-ups: 10–15 reps <span class='xp-tag'>+20 XP</span><br>Walking Lunges: 12 reps/leg <span class='xp-tag'>+20 XP</span><br>Glute Bridges: 15–20 reps <span class='xp-tag'>+20 XP</span><br>Standard Plank: 45–60s hold <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Tuesday", 
+                    title: "HIIT Fat Burn (4 Rounds | 40s Work / 20s Rest)", 
+                    desc: "Jumping Jacks <span class='xp-tag'>+20 XP</span><br>Mountain Climbers <span class='xp-tag'>+20 XP</span><br>High Knees <span class='xp-tag'>+20 XP</span><br>Burpees (or Sprawls) <span class='xp-tag'>+20 XP</span><br>Skaters / Lateral Hops <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Wednesday", 
+                    title: "Core & Lower Body (4 Sets | Rest 45s)", 
+                    desc: "Sumo Squats: 15–20 reps <span class='xp-tag'>+20 XP</span><br>Lying Leg Raises: 12–15 reps <span class='xp-tag'>+20 XP</span><br>Reverse Lunges: 10–12 reps/leg <span class='xp-tag'>+20 XP</span><br>Bicycle Crunches: 15 reps/side <span class='xp-tag'>+20 XP</span><br>Wall Sit: 45s hold <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Thursday", 
+                    title: "Upper Body Focus (4 Sets | Rest 60s)", 
+                    desc: "Push-ups: 12–15 reps <span class='xp-tag'>+20 XP</span><br>Pike Push-ups: 8–12 reps <span class='xp-tag'>+20 XP</span><br>Doorway / Towel Rows: 12–15 reps <span class='xp-tag'>+20 XP</span><br>Plank-to-Pushups: 8–10 reps <span class='xp-tag'>+20 XP</span><br>Supermans: 15 reps <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Friday", 
+                    title: "High-Burn Cardio (4 Rounds | 45s Work / 15s Rest)", 
+                    desc: "Shadow Boxing / Quick Punches <span class='xp-tag'>+20 XP</span><br>Plank Jacks <span class='xp-tag'>+20 XP</span><br>Butt Kicks <span class='xp-tag'>+20 XP</span><br>Squat Jumps / Speed Squats <span class='xp-tag'>+20 XP</span><br>Mountain Climbers <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Saturday", 
+                    title: "Full Body Circuit (3-4 Rounds | Rest 90s After All 5)", 
+                    desc: "Squats: 20 reps <span class='xp-tag'>+20 XP</span><br>Push-ups: 12 reps <span class='xp-tag'>+20 XP</span><br>Jumping Jacks: 50 reps <span class='xp-tag'>+20 XP</span><br>Leg Raises: 12 reps <span class='xp-tag'>+20 XP</span><br>Burpees: 10 reps <span class='xp-tag'>+20 XP</span>" 
+                },
+                { 
+                    day: "Sunday", 
+                    title: "Active Recovery", 
+                    desc: "30–45 Minute Walk <span class='xp-tag'>+20 XP</span><br>Full Body Dynamic Stretching (Cat-Cow, Cobra, Hamstring Stretches) <span class='xp-tag'>+20 XP</span>" 
+                }
+            ],
+            muscular: [
+                { 
+                    day: "Monday", 
+                    title: "Chest & Triceps (4 Sets | Rest 60–90s | 3s Eccentric Control)", 
+                    desc: "Decline Push-ups (Feet placed on chair/bed): 10–12 reps <span class='xp-tag'>+50 XP</span><br>Diamond Push-ups: 8–12 reps <span class='xp-tag'>+50 XP</span><br>Standard Push-ups (1s hold at bottom position): 12–15 reps <span class='xp-tag'>+50 XP</span><br>Triceps Bench/Chair Dips: 12–15 reps <span class='xp-tag'>+50 XP</span><br>Plank-to-Pushups: 8–10 reps <span class='xp-tag'>+50 XP</span>" 
+                },
+                { 
+                    day: "Tuesday", 
+                    title: "Quads & Calves (4 Sets | Rest 60–90s)", 
+                    desc: "Tempo Bodyweight Squats (3s down, 1s hold, explosive up): 15–20 reps <span class='xp-tag'>+50 XP</span><br>Bulgarian Split Squats (Rear foot on chair/bed): 10–12 reps/leg <span class='xp-tag'>+50 XP</span><br>Jump Squats: 10–12 reps <span class='xp-tag'>+50 XP</span><br>Wall Sit Hold: 45–60s <span class='xp-tag'>+50 XP</span><br>Single-Leg Calf Raises: 15–20 reps/leg <span class='xp-tag'>+50 XP</span>" 
+                },
+                { 
+                    day: "Wednesday", 
+                    title: "Back & Biceps (4 Sets | Rest 60s | 2s Shoulder Blade Squeeze)", 
+                    desc: "Doorway / Towel Rows: 12–15 reps <span class='xp-tag'>+50 XP</span><br>Inverted Rows (Table edge / door anchor): 8–12 reps <span class='xp-tag'>+50 XP</span><br>Superman Y-T-W Holds: 10–12 reps <span class='xp-tag'>+50 XP</span><br>Prone Swimmers: 12 reps <span class='xp-tag'>+50 XP</span><br>Doorframe Isometric Biceps Curls (Self-resistance pull): 30s/arm <span class='xp-tag'>+50 XP</span>" 
+                },
+                { 
+                    day: "Thursday", 
+                    title: "Shoulders & Core (4 Sets | Rest 60–90s)", 
+                    desc: "Pike Push-ups (Hips elevated high): 8–12 reps <span class='xp-tag'>+50 XP</span><br>Elevated Feet Pike Push-ups / Wall Hold: 8–10 reps / 30s hold <span class='xp-tag'>+50 XP</span><br>Plank Shoulder Taps: 20 reps total <span class='xp-tag'>+50 XP</span><br>Lying Leg Raises: 12–15 reps <span class='xp-tag'>+50 XP</span><br>Side Planks: 30–45s/side <span class='xp-tag'>+50 XP</span>" 
+                },
+                { 
+                    day: "Friday", 
+                    title: "Hamstrings & Glutes (4 Sets | Rest 60s)", 
+                    desc: "Single-Leg Glute Bridges: 12–15 reps/leg <span class='xp-tag'>+50 XP</span><br>Single-Leg RDLs (Bodyweight balance): 10–12 reps/leg <span class='xp-tag'>+50 XP</span><br>Reverse Lunges: 12–15 reps/leg <span class='xp-tag'>+50 XP</span><br>Sumo Squats: 15–20 reps <span class='xp-tag'>+50 XP</span><br>Glute Bridge March: 20 reps total <span class='xp-tag'>+50 XP</span>" 
+                },
+                { 
+                    day: "Saturday", 
+                    title: "Agility + Full Body Hypertrophy", 
+                    desc: "<b>Part 1: Agility Drills (5 min x 3 Sets = 15 Mins Total | 1-2 min rest between sets)</b><br>High Knees with Quick Feet / Ladder Drills: 45s <span class='xp-tag'>+50 XP</span><br>Lateral Shuffles / Skater Hops: 45s <span class='xp-tag'>+50 XP</span><br>In-and-Out Fast Footwork: 45s <span class='xp-tag'>+50 XP</span><br>Fast Mountain Climber Sprints: 45s <span class='xp-tag'>+50 XP</span><br>Burpee / Sprawl to Agility Pop-up: 45s <span class='xp-tag'>+50 XP</span><br><i>(15 sec rest after each movement)</i><br><br><b>Part 2: Full Body Hypertrophy Circuit (3-4 Rounds | Rest 90s after complete circuit)</b><br>Bulgarian Split Squats: 10 reps/leg <span class='xp-tag'>+50 XP</span><br>Decline Push-ups: 10–12 reps <span class='xp-tag'>+50 XP</span><br>Inverted / Towel Rows: 12 reps <span class='xp-tag'>+50 XP</span><br>Pike Push-ups: 8–10 reps <span class='xp-tag'>+50 XP</span><br>Single-Leg Glute Bridges: 12 reps/leg <span class='xp-tag'>+50 XP</span>", 
+                    link: agilityLink 
+                },
+                { 
+                    day: "Sunday", 
+                    title: "Active Recovery", 
+                    desc: "30-Minute Light Walk <span class='xp-tag'>+50 XP</span><br>Full Body Mobility & Dynamic Stretching <span class='xp-tag'>+50 XP</span>" 
+                }
+            ],
+            fatbalance: [
+                { 
+                    day: "Monday", 
+                    title: "Core Stability & Balance (4 Sets | Rest 45s)", 
+                    desc: "Bear Crawl Hold: 30–45s (Knees 2\" off ground) <span class='xp-tag'>+30 XP</span><br>Bird-Dogs: 12 reps/side (2s pause) <span class='xp-tag'>+30 XP</span><br>Side Plank with Hip Dips: 10–12 reps/side <span class='xp-tag'>+30 XP</span><br>Dead Bugs: 15 reps/side <span class='xp-tag'>+30 XP</span><br>Single-Leg Balance Glute Bridge: 10 reps/leg <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Tuesday", 
+                    title: "Unilateral Strength & Control (4 Sets | Rest 60s)", 
+                    desc: "Single-Leg Squats / Step-Ups: 8–10 reps/leg <span class='xp-tag'>+30 XP</span><br>Reverse Lunges with Knee Drive: 12 reps/leg <span class='xp-tag'>+30 XP</span><br>Single-Leg RDLs (Bodyweight): 10 reps/leg <span class='xp-tag'>+30 XP</span><br>Staggered Stance Push-ups: 10 reps (5/side) <span class='xp-tag'>+30 XP</span><br>Calf Raises with Single-Leg Hold: 15 reps/leg <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Wednesday", 
+                    title: "Steady-State Bodyweight Flow (3 Sets | Smooth Control)", 
+                    desc: "Downward Dog to Cobra Stretch: 10 transitions <span class='xp-tag'>+30 XP</span><br>Bodyweight Good Mornings: 15 reps <span class='xp-tag'>+30 XP</span><br>Cossack Squats (Side Lunges): 10 reps/side <span class='xp-tag'>+30 XP</span><br>Plank Shoulder Taps: 20 reps total <span class='xp-tag'>+30 XP</span><br>Wall Sit: 60s hold <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Thursday", 
+                    title: "Postural & Posterior Chain (4 Sets | Rest 45s)", 
+                    desc: "Supermans (Y-T-W Holds): 12 reps (2s hold) <span class='xp-tag'>+30 XP</span><br>Doorway / Towel Isometric Rows: 12–15 reps <span class='xp-tag'>+30 XP</span><br>Glute Bridges with 3s Hold: 15 reps <span class='xp-tag'>+30 XP</span><br>Pike Push-ups: 8–10 reps <span class='xp-tag'>+30 XP</span><br>Prone Swimmers: 10 reps total <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Friday", 
+                    title: "Metabolic Balance Circuit (4 Rounds | 40s Work / 20s Rest)", 
+                    desc: "Jumping Jacks <span class='xp-tag'>+30 XP</span><br>Bodyweight Squats <span class='xp-tag'>+30 XP</span><br>Plank Holds <span class='xp-tag'>+30 XP</span><br>Mountain Climbers (Slow & Controlled) <span class='xp-tag'>+30 XP</span><br>Glute Bridges <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Saturday", 
+                    title: "Agility & Dynamic Movement (4 Rounds | Rest 60s)", 
+                    desc: "Skaters / Lateral Hops: 15 reps/side <span class='xp-tag'>+30 XP</span><br>High Knees (Controlled Pace): 30s <span class='xp-tag'>+30 XP</span><br>In-and-Out Squat Jumps: 12 reps <span class='xp-tag'>+30 XP</span><br>Plank Jacks: 30s <span class='xp-tag'>+30 XP</span><br>Standing Bicycle Crunches: 15 reps/side <span class='xp-tag'>+30 XP</span>" 
+                },
+                { 
+                    day: "Sunday", 
+                    title: "Active Recovery", 
+                    desc: "45-Minute Light Walk <span class='xp-tag'>+30 XP</span><br>Full Body Mobility Routine (T-spine, hips, ankles) <span class='xp-tag'>+30 XP</span>" 
+                }
+            ]
+        };
+
+        function renderRoutine(key) {
+            const container = document.getElementById('routineContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            routinesData[key].forEach(function (item) {
+                const div = document.createElement('div');
+                div.className = 'day-box';
+
+                const linkHtml = item.link 
+                    ? `<br><a href="${item.link}" target="_blank" rel="noopener noreferrer" class="workout-link">▶ Watch Agility Routine Video</a>` 
+                    : '';
+
+                div.innerHTML = `
+                    <div class="day-header">
+                        <span>${item.day}</span>
+                        <span class="day-title">${item.title}</span>
+                    </div>
+                    <div class="day-desc">${item.desc}${linkHtml}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Initial Load
+        renderRoutine('fatloss');
+
+        // Track Selector Switcher
+        function setActiveBtn(activeBtn) {
+            document.getElementById('btnFatLoss').classList.remove('active');
+            document.getElementById('btnMuscular').classList.remove('active');
+            document.getElementById('btnFatBalance').classList.remove('active');
+            activeBtn.classList.add('active');
+        }
+
+        document.getElementById('btnFatLoss').onclick = function () {
+            setActiveBtn(this);
+            renderRoutine('fatloss');
+        };
+
+        document.getElementById('btnMuscular').onclick = function () {
+            setActiveBtn(this);
+            renderRoutine('muscular');
+        };
+
+        document.getElementById('btnFatBalance').onclick = function () {
+            setActiveBtn(this);
+            renderRoutine('fatbalance');
+        };
+    });
+</script>
+</body>
+</html>
